@@ -8,12 +8,12 @@ import java.awt.event.*;
 class Update_Bill extends Add_Bill implements ActionListener{
 
     JFrame f;
-    JLabel id,id1,id2,id3,id4,id5,id6,id7,id8,id9,id10,id11,id12,id15,lab,lab1;
-    JTextField t,t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11;
-    JButton b,b1,b2,b3;
+    JLabel id,id1,id2,id3,id4,id5,id6,id7,id8,id9,id10,id11,id12,id15,lab,lab1, l1;
+    JTextField t,t1,t2,t3,t4,t5,t6,t7,t8,t9,t10,t11, tn1;
+    JButton b,b1,b2,b3,bn1,bn2;
     String id_emp;
 
-    Update_Bill(String idaa)
+    Update_Bill()
     {
         super(0);
         f=new JFrame("update Inovice details");
@@ -22,20 +22,40 @@ class Update_Bill extends Add_Bill implements ActionListener{
         f.setLocation(450,250);
         f.setBackground(Color.white);
         f.setLayout(null);
-
-        id_emp=idaa;   
+   
         id15=new JLabel();
         id15.setBounds(0,0,900,500);
         id15.setLayout(null);
         
         id8 = new JLabel("Update Inovice Detail:");
         id8.setBounds(50,10,500,50);
-        id8.setFont(new Font("serif",Font.ITALIC,40));
+        id8.setFont(new Font("serif",Font.BOLD,40));
         id8.setForeground(Color.black);
         id15.add(id8);
         f.add(id15);
 
+        l1=new JLabel("Invoice Number:");
+        l1.setBounds(50,50,250,30);
+        l1.setForeground(Color.black);
+        Font f2 = new Font("serif",Font.BOLD,25);
+        l1.setFont(f2);
+        id15.add(l1);
 
+        tn1=new JTextField();
+        tn1.setBounds(250,50,150,30);
+        id15.add(tn1);
+
+
+        bn1=new JButton("Search");
+        bn1.setBounds(200,100,100,30);
+        bn1.addActionListener(this);
+        id15.add(bn1);
+
+        bn2=new JButton("Back");
+        bn2.setBounds(360,100,100,30);  
+        bn2.addActionListener(this);
+        id15.add(bn2);
+        
         id1 = new JLabel("Company Name:"); 
         id1.setBounds(50,100,100,30);
         id1.setFont(new Font("serif",Font.BOLD,20));
@@ -117,8 +137,26 @@ class Update_Bill extends Add_Bill implements ActionListener{
         b1.setBounds(450,400,100,30);
         b1.addActionListener(this);
         id15.add(b1);
+        
+        id1.setVisible(false);
+        id2.setVisible(false);
+        id3.setVisible(false);
+        id4.setVisible(false);
+        id5.setVisible(false);
+        id6.setVisible(false);
+        id7.setVisible(false);
+        id9.setVisible(false);
+        t1.setVisible(false);
+        t2.setVisible(false);
+        t3.setVisible(false);
+        t4.setVisible(false);
+        t5.setVisible(false);
+        t6.setVisible(false);
+        t7.setVisible(false);
+        t8.setVisible(false);
+        b.setVisible(false);
+        b1.setVisible(false);
 
-        showData(idaa);
     }
 
     int i=0;
@@ -146,7 +184,6 @@ class Update_Bill extends Add_Bill implements ActionListener{
             }
             if(i==0)
                 JOptionPane.showMessageDialog(null,"Id not found");
-            new Search_Bill();
         }catch(Exception ex){}
         f.setVisible(true);
         f.setSize(900,500);
@@ -154,6 +191,42 @@ class Update_Bill extends Add_Bill implements ActionListener{
     }
 
     public void actionPerformed(ActionEvent ae){
+        if(ae.getSource()==b)
+        {
+            try
+            {
+                conn con = new conn();
+                String str = "SELECT Company_Name, Contact_Number, Invoice_Number, Invoice_Date, Amount, Amount_Paid, Due_Date FROM accounts WHERE Invoice_Number = '"+t.getText()+"' ";
+                ResultSet rs = con.s.executeQuery(str);
+
+                int i=0;
+                if(rs.next())
+                {
+                    id1.setVisible(true);
+                    id2.setVisible(true);
+                    id3.setVisible(true);
+                    id4.setVisible(true);
+                    id5.setVisible(true);
+                    id6.setVisible(true);
+                    id7.setVisible(true);
+                    id9.setVisible(true);
+                    t1.setVisible(true);
+                    t2.setVisible(true);
+                    t3.setVisible(true);
+                    t4.setVisible(true);
+                    t5.setVisible(true);
+                    t6.setVisible(true);
+                    t7.setVisible(true);
+                    t8.setVisible(true);
+                    b.setVisible(true);
+                    b1.setVisible(true);
+                }
+                if(i==0)
+                    JOptionPane.showMessageDialog(null,"Bill Not Found");
+            }
+            catch(Exception ex)
+            {}
+        }
         if(ae.getSource()==b && i==1){
             try{
                 conn con = new conn();
@@ -173,6 +246,6 @@ class Update_Bill extends Add_Bill implements ActionListener{
     }
 
     public static void main(String[] arg){
-        new Update_Bill("Update Bill");
+        new Update_Bill();
     }
 }

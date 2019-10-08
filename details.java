@@ -66,7 +66,7 @@ public class details implements ActionListener
         if(ae.getSource()==b2)
         {
             frame.setVisible(false);
-            new View_Bill();
+            View_Bill v = new View_Bill();
         }
         if(ae.getSource()==b3)
         {
