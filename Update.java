@@ -8,8 +8,8 @@ import javax.swing.*;
 class Update implements ActionListener
 {
     JFrame f;
-    JTextField t;
-    JLabel l1,l2,l3,l4,l5,l6,l7,l8;
+    JTextField t,t1;
+    JLabel l1,l2,l3,l4,l5,l6,l7,l8,l9;
     JButton b,b1,b2,b3;
 
     Update()
@@ -84,22 +84,35 @@ class Update implements ActionListener
         Font F5=new Font("serif",Font.BOLD,20);
         l4.setFont(F5);
         l5.add(l4);
-
+        
         l8=new JLabel();
-        l8.setBounds(200,250,350,30);
+        l8.setBounds(200,250,150,30);
         l8.setForeground(Color.black);
         Font f8=new Font("serif",Font.BOLD,20);
         l8.setFont(f8);
         l5.add(l8);
+        
+        l9=new JLabel("Amount Paid:");
+        l9.setBounds(50,300,250,30);
+        l9.setForeground(Color.black);
+        Font F9=new Font("serif",Font.BOLD,20);
+        l9.setFont(F9);
+        l5.add(l9);
+        
+        t1=new JTextField();
+        t1.setBounds(200,300,150,30);
+        t1.setForeground(Color.black);
+        t1.setFont(f8);
+        l5.add(t1);
 
-        b1=new JButton("Remove");
-        b1.setBounds(120,300,100,30);
+        b1=new JButton("Update");
+        b1.setBounds(120,400,100,30);
         b1.addActionListener(this);
         l5.add(b1);
 
 
         b2=new JButton("Cancel");
-        b2.setBounds(300,300,100,30);
+        b2.setBounds(300,400,100,30);
         b2.addActionListener(this);
         l5.add(b2);
         l2.setVisible(false);
@@ -107,7 +120,9 @@ class Update implements ActionListener
         l4.setVisible(false);
         b1.setVisible(false);
         b2.setVisible(false);
-
+        l8.setVisible(false);
+        l9.setVisible(false);
+        t1.setVisible(false);
         f.setSize(500,500);
         f.setLocation(500,250); 
         f.setVisible(true);
@@ -130,7 +145,7 @@ class Update implements ActionListener
                     String Company_Name = rs.getString(1);
                     String Invoice_Date = rs.getString(4);
                     String Amount = rs.getString(5);
-
+                    String Amt_Paid = rs.getString(6);
                     l2.setVisible(true);
                     l3.setVisible(true);
                     l4.setVisible(true);
@@ -140,6 +155,10 @@ class Update implements ActionListener
                     l6.setText(Company_Name);
                     l7.setText(Invoice_Date);
                     l8.setText(Amount);
+                    t1.setText(Amt_Paid);
+                    l8.setVisible(true);
+                    l9.setVisible(true);
+                    t1.setVisible(true);
                 }
                 if(i==0)
                     JOptionPane.showMessageDialog(null,"Bill Not Found");
@@ -152,9 +171,9 @@ class Update implements ActionListener
             try
             {
                 conn con = new conn();
-                String str = "DELETE FROM accounts WHERE Invoice_Number = '"+t.getText()+"'";
+                String str = "update accounts set Amount_Paid='"+t1.getText()+"' where Invoice_Number='"+t.getText()+"'";
                 con.s.executeUpdate(str);
-                JOptionPane.showMessageDialog(null,"deleted successfully");
+                JOptionPane.showMessageDialog(null,"Updated successfully");
                 l2.setVisible(false);
                 l3.setVisible(false);
                 l4.setVisible(false);
@@ -163,11 +182,13 @@ class Update implements ActionListener
                 l8.setVisible(false);
                 b1.setVisible(false);
                 b2.setVisible(false);
+                l9.setVisible(false);
+                t1.setVisible(false);
 
             }
             catch(Exception ex)
             {
-                JOptionPane.showMessageDialog(null,"Exception occured while delting record "+ex);
+                JOptionPane.showMessageDialog(null,"Exception occured while updating record "+ex);
             }
         }
         if(ae.getSource()==b2){

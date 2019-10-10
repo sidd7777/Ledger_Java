@@ -76,7 +76,7 @@ public class details implements ActionListener
         if(ae.getSource()==b4)
         {
             frame.setVisible(false);
-            new Search_Bill();
+            new Update();
         }
     }
 
